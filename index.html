@@ -21,25 +21,28 @@
 
   #dialogue {
     position: absolute;
-    bottom: 20px;
+    bottom: 5%;
     left: 50%;
     transform: translateX(-50%);
-    width: 80%;
-    background: rgba(0,0,0,0.6);
-    padding: 20px;
+    width: 90%;
+    max-height: 35%;
+    overflow-y: auto;
+    background: rgba(0,0,0,0.7);
+    padding: 15px;
     border-radius: 10px;
-    font-size: 18px;
-    line-height: 1.6;
+    font-size: 4vw;
+    line-height: 1.4;
   }
 
   #next {
     background: #e94560;
     border: none;
     color: white;
-    padding: 12px 30px;
+    padding: 12px 5vw;
     border-radius: 8px;
     cursor: pointer;
-    font-size: 18px;
+    font-size: 4vw;
+    margin-top: 5px;
     transition: 0.3s;
   }
 
@@ -51,11 +54,11 @@
     background: #4b8cff;
     border: none;
     color: white;
-    padding: 10px 20px;
+    padding: 2vw 5vw;
     border-radius: 8px;
-    margin: 5px;
+    margin: 3px;
     cursor: pointer;
-    font-size: 17px;
+    font-size: 3.5vw;
   }
 
   #choices button:hover {
@@ -64,21 +67,24 @@
 
   .character {
     position: absolute;
-    bottom: 100px;
-    width: 200px;
+    bottom: 15%;
+    width: 25vw;
+    max-width: 200px;
     transition: all 1s ease;
   }
 
   #moe {
-    left: -250px;
+    left: -30vw;
     background: url('https://i.imgur.com/tBuVyqi.png') center/contain no-repeat;
-    height: 300px;
+    height: auto;
+    aspect-ratio: 2/3;
   }
 
   #denasia {
-    right: -250px;
+    right: -30vw;
     background: url('https://i.imgur.com/fdqX7Pb.png') center/contain no-repeat;
-    height: 300px;
+    height: auto;
+    aspect-ratio: 2/3;
   }
 
   .fade-in {
@@ -88,6 +94,12 @@
   @keyframes fadeIn {
     from {opacity: 0;}
     to {opacity: 1;}
+  }
+
+  /* Make audio controls smaller on mobile */
+  audio {
+    width: 90%;
+    margin-top: 5px;
   }
 </style>
 </head>
@@ -272,3 +284,4 @@ function denasiaResponse(choice) {
 </script>
 </body>
 </html>
+
