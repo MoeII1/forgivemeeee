@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>The Fool & Princess Denasia: The Quest for Baklava and Forgiveness</title>
+<style>
+  body {
+    margin: 0;
+    background: linear-gradient(to bottom, #1a1a2e, #16213e);
+    color: #fff;
+    font-family: "Trebuchet MS", sans-serif;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  #scene {
+    position: relative;
+    height: 100vh;
+    width: 100vw;
+  }
+
+  #dialogue {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    background: rgba(0,0,0,0.6);
+    padding: 20px;
+    border-radius: 10px;
+    font-size: 18px;
+    line-height: 1.6;
+  }
+
+  #next {
+    background: #e94560;
+    border: none;
+    color: white;
+    padding: 12px 30px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: 0.3s;
+  }
+
+  #next:hover {
+    background: #ff6b81;
+  }
+
+  #choices button {
+    background: #4b8cff;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    margin: 5px;
+    cursor: pointer;
+    font-size: 17px;
+  }
+
+  #choices button:hover {
+    background: #77a8ff;
+  }
+
+  .character {
+    position: absolute;
+    bottom: 100px;
+    width: 200px;
+    transition: all 1s ease;
+  }
+
+  #moe {
+    left: -250px;
+    background: url('https://i.imgur.com/tBuVyqi.png') center/contain no-repeat;
+    height: 300px;
+  }
+
+  #denasia {
+    right: -250px;
+    background: url('https://i.imgur.com/fdqX7Pb.png') center/contain no-repeat;
+    height: 300px;
+  }
+
+  .fade-in {
+    animation: fadeIn 1s ease;
+  }
+
+  @keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+  }
+</style>
+</head>
+<body>
+<audio src="mylovetheme.mp3" controls autoplay loop></audio>
+<div id="scene">
+  <div id="moe" class="character"></div>
+  <div id="denasia" class="character"></div>
+  <div id="dialogue" class="fade-in"></div>
+  <div id="choices"></div>
+  <button id="next">▶ Next</button>
+  <audio id="music" loop autoplay volume="0.5" 
+         src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_86e3be5d8a.mp3?filename=fantasy-game-background-music-10969.mp3">
+  </audio>
+</div>
+
+<script>
+const dialogueBox = document.getElementById('dialogue');
+const nextBtn = document.getElementById('next');
+const choices = document.getElementById('choices');
+const moe = document.getElementById('moe');
+const denasia = document.getElementById('denasia');
+const music = document.getElementById('music');
+
+let scene = 0;
+
+const story = [
+  // Scene 1
+  "🌸 Scene 1 – A Royal Misunderstanding 🌸<br><br>In the shining kingdom of Lumeria, Princess Denasia ruled with wisdom, charm, and a suspiciously perfect eyebrow arch.<br><br>And then there was The Fool, known to friends (and victims) as Moe — inventor, musician, professional distraction.",
+  "Flashback:<br>Denasia: “Moe, you said you’d be back before sunset.”<br>Moe: “I was! …Just not the same sunset.” ⚡<br>(Lightning crashes even though it’s noon.)",
+  "Narrator:<br>He hadn’t seen her in ages. She said he 'abandoned her,' which was slightly unfair — he’d merely become stuck inside his latest project: 'Automatic Lute 2.0 (Now With Self-Tuning Strings and Explosions).' <br><br>Quest Started: Win back the Princess before she legally renames him 'That Guy.'",
+  
+  // Scene 2
+  "🌿 Scene 2 – The Garden of Regret 🌿<br><br>Setting: Talking roses, gossiping butterflies, and one depressed gnome.",
+  "Rose #1: 'Psst! That’s the neglectful one.'<br>Butterfly: 'Three weeks! Even caterpillars have shorter phases.'<br>Moe: 'I was busy improving art and accidentally inventing smoke bombs!'",
+  "🪷 Task: Collect 3 roses. (Click them!)",
+  
+  // Scene 3
+  "🌉 Scene 3 – Bridge of Memories 🌉<br><br>Each step shows glowing text bubbles — Moe’s greatest fails.",
+  "Mini-choice: 1️⃣ Read every memory → Bridge solidifies. 2️⃣ Run past → Bridge collapses and dumps him into a pond labeled Consequences.",
+  
+  // Scene 4
+  "🌲 Scene 4 – Forest of Trials (and Snacks) 🌲<br><br>Deep within the forest stood a portable bakery and a suspiciously cheerful baker.",
+  "Baker: 'Traveler! Try baklava — pastry of passion and slightly sticky reconciliation!'<br>Moe: 'Baklava? That’s Denasia’s favorite… or soon will be!'",
+  
+  // Scene 5
+  "❄️ Scene 5 – The Snowy Hill of Second Chances ❄️<br><br>Wind howls like angry advisors.<br>Snowman NPC: 'Turn back, fool! It’s freezing!'<br>Moe: 'I’ve survived worse — Denasia’s silent treatment lasts longer than winter.'",
+  
+  // Scene 6
+  "🏰 Scene 6 – Castle of Silence 🏰<br><br>Setting: Candlelight. Footsteps echo. Denasia stands by the window.<br><br>Moe straightens his half-burnt cape.",
+  "Moe: 'Hi. You look radiant — like the sun’s jealous of you.'<br>Denasia: 'You look like you lost a fight with an oven.' (Half-smile detected.)",
+  "Interactive Dialogue:",
+  
+  // Epilogue
+  "🍯 Epilogue – Baklava & Balance 🍯<br><br>They sit under the balcony, sharing crumbs.<br><br>Denasia: 'It’s flaky, sweet, and a bit of a mess.'<br>Moe: 'Like me!'<br>Denasia: 'Exactly why I like it.'<br>Moe: 'So… forgiven?'<br>Denasia: 'On one condition: next time you disappear, bring more dessert.'<br>Moe: 'Deal. I’ll vanish with a bakery cart.'<br><br>And thus, harmony returned to Lumeria.<br>The Fool learned that sometimes the grandest quest… is showing up.<br><br><b>To Princess Denasia — I might forget time, but never you. Also, please rate my apology 5 stars and enjoy the baklava.</b><br><br>❤️ THE END ❤️"
+];
+
+function showDialogue(text) {
+  dialogueBox.innerHTML = text;
+  dialogueBox.classList.remove('fade-in');
+  void dialogueBox.offsetWidth;
+  dialogueBox.classList.add('fade-in');
+}
+
+function resetChoices() {
+  choices.innerHTML = "";
+  nextBtn.style.display = "inline-block";
+}
+
+nextBtn.onclick = () => {
+  resetChoices();
+
+  // Character intro animations
+  if (scene === 0) {
+    moe.style.left = "50px";
+  }
+  if (scene === 6) {
+    denasia.style.right = "100px";
+  }
+
+  // Scene-specific interactions
+  if (scene === 5) {
+    nextBtn.style.display = "none";
+    showRoses();
+    scene++;
+    return;
+  }
+
+  if (scene === 7) {
+    nextBtn.style.display = "none";
+    showBridgeChoices();
+    scene++;
+    return;
+  }
+
+  if (scene === 10) {
+    nextBtn.style.display = "none";
+    showBaklavaChoices();
+    scene++;
+    return;
+  }
+
+  if (scene === 13) {
+    nextBtn.style.display = "none";
+    showDialogueWheel();
+    scene++;
+    return;
+  }
+
+  if (scene < story.length) {
+    showDialogue(story[scene]);
+    scene++;
+  }
+};
+
+function showRoses() {
+  showDialogue("🪷 Click the 3 roses to collect them!");
+  choices.innerHTML = "";
+  for (let i = 0; i < 3; i++) {
+    const rose = document.createElement("button");
+    rose.textContent = "🌹";
+    rose.onclick = () => {
+      rose.disabled = true;
+      rose.textContent = "✅";
+      if ([...choices.querySelectorAll("button")].every(b => b.disabled)) {
+        showDialogue("Moe: Perfect! One for forgiveness, one for flattery, one for when she throws the first two.");
+        setTimeout(resetChoices, 2000);
+      }
+    };
+    choices.appendChild(rose);
+  }
+}
+
+function showBridgeChoices() {
+  showDialogue("🌉 Will Moe reflect or rush?");
+  choices.innerHTML = `
+    <button onclick="bridgeResult(true)">Read every memory</button>
+    <button onclick="bridgeResult(false)">Run past</button>
+  `;
+}
+
+function bridgeResult(reflect) {
+  if (reflect) {
+    showDialogue("Moe bravely reads every memory. The bridge glows solid beneath his feet. He crosses safely.");
+  } else {
+    showDialogue("Moe sprints ahead — the bridge collapses! SPLASH 💦<br>Moe: 'I’ll reflect later… preferably somewhere drier!'");
+  }
+  setTimeout(resetChoices, 3000);
+}
+
+function showBaklavaChoices() {
+  showDialogue("🍰 Choose your culinary destiny:");
+  choices.innerHTML = `
+    <button onclick="baklavaOutcome(1)">Buy one</button>
+    <button onclick="baklavaOutcome(2)">Bake one</button>
+    <button onclick="baklavaOutcome(3)">Taste-test all</button>
+  `;
+}
+
+function baklavaOutcome(choice) {
+  if (choice === 1) showDialogue("Moe buys one and holds it proudly. Reward: Baklava (+10 Charm, +3 Sticky Fingers)");
+  if (choice === 2) showDialogue("Moe mixes everything wrong.<br>Baker: 'You’ve invented… flaklava.'<br>Moe: 'Patent pending.'");
+  if (choice === 3) showDialogue("Baker: 'You just consumed my week’s profits!'<br>Moe: 'I call it research!'");
+  setTimeout(resetChoices, 4000);
+}
+
+function showDialogueWheel() {
+  showDialogue("🎭 Choose Moe’s approach:");
+  choices.innerHTML = `
+    <button onclick="denasiaResponse('A')">A. “I’m sorry.”</button>
+    <button onclick="denasiaResponse('B')">B. “I brought snacks.”</button>
+    <button onclick="denasiaResponse('C')">C. “I built you something that only occasionally explodes.”</button>
+  `;
+}
+
+function denasiaResponse(choice) {
+  if (choice === 'A') showDialogue("Denasia softens. 'You actually said sorry without inventing something. Growth!' ❤️");
+  if (choice === 'B') showDialogue("Denasia perks up. '...Baklava?'<br>Moe: 'I braved a talking snowman and twelve calories to get it.'");
+  if (choice === 'C') showDialogue("Denasia: 'Define “occasionally.”'<br>Moe: '...Once every moon cycle?'");
+  setTimeout(resetChoices, 4000);
+}
+</script>
+</body>
+</html>
